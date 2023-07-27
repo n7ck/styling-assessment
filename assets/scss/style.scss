@@ -4,3 +4,136 @@
 
 // Custom SCSS for the LP
 @import "./base";
+
+$textOffset : 60px;
+$spacing-50: min(10%, 50px);
+$spacing-68: min(11%, 68px);
+$spacing-85: min(14%, 85px);
+
+@mixin font-button {
+    font-family: "Helvetica Neue";
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 400;
+    color: #FFF;
+    letter-spacing: -.32px;
+    @include media-breakpoint-up(md) {
+        font-size: 16px;
+    }
+}
+@mixin font-paragraph {
+    font-family: "Helvetica Neue";
+    font-size: 19px;
+    line-height: 30px;
+    font-weight: 400;
+    color: #303239;
+    @include media-breakpoint-up(md) {
+        font-size: 22px;
+        line-height: 34px;
+    }
+}
+@mixin font-section-title {
+    font-family: "Ovo";
+    font-size: 30px;
+    line-height: 33px;
+    font-weight: 400;
+    letter-spacing: -0.36px;
+    @include media-breakpoint-up(md) {
+        font-size: 36px;
+        line-height: 39px;
+    }
+}
+
+@keyframes appear {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes slide {
+    0% { transform: translateX(10%); }
+    100% { transform: translateX(0); }
+}
+
+
+.container{
+    margin: 25px auto 56px;
+    padding: 0;
+    width: 94%;
+    min-width: 350px; // assuming 360px is smallest screen supporting
+    position: relative;
+    display: flex;
+    
+    .imgContainer {
+        flex-shrink: 0;
+        .catImg {
+            animation: 1s ease-out 0s 1 appear;
+        }
+    }
+}
+
+.textOffsetContainer{
+    position: relative;
+    box-shadow: 0px 10px 20px #00000029;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    .secTitle {
+        @include font-section-title;
+    }
+
+    .secText {
+        @include font-paragraph;
+    }
+
+    .button {
+        @include font-button;
+        align-self: flex-start;
+        padding: 16px 40px;
+        border: none;
+        background: #327AB9;
+        transition: background-color 0.5s ease-out 100ms;
+        &:hover {
+            background: #303239;
+        }
+        &:active {
+            padding: 17px 40px 15px 40px;
+        }
+    }
+}
+
+
+// < 768px ( Mobile Only )
+@include media-breakpoint-down(md) { 
+    .desktopOnly{
+        display: none;
+    }
+    .container{
+        max-width: 576px; 
+        flex-direction: column;
+        .textOffsetContainer{
+            animation: 1s ease-out 0s 1 appear;
+            padding: 10% 9% 9% 10%;
+        }
+    }
+}
+
+// ≥768px ( Desktop Only )
+@include media-breakpoint-up(md) {
+    .mobileOnly{
+        display: none;
+    }
+    .container{
+        padding-bottom: $textOffset;
+        max-width: 1227px; // assuming mock is showing max screen width
+        .imgContainer {
+            width: 51.4%;
+        }
+        .textOffsetContainer{
+            animation: 1s ease-out 0s 1 slide;
+            margin-left: -($textOffset - 6px);
+            top: $textOffset;
+            padding: $spacing-68 $spacing-68 $spacing-50 $spacing-85;
+        }
+    }
+}
